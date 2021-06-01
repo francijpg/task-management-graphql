@@ -5,8 +5,13 @@ const typeDefs = gql`
     token: String
   }
 
+  type Project {
+    name: String
+    id: ID
+  }
+
   type Query {
-    getProjects: String
+    getProjects: [Project]
   }
 
   input UserInput {
@@ -20,10 +25,16 @@ const typeDefs = gql`
     password: String!
   }
 
+  input ProjectInput {
+    name: String!
+  }
+
   type Mutation {
-    # User
-    register(input: UserInput): String
+    registerUser(input: UserInput): String
     authenticateUser(input: AuthenticateInput): Token
+    newProject(input: ProjectInput): Project
+    updateProject(id: ID!, input: ProjectInput): Project
+    deleteProject(id: ID!): String
   }
 `;
 
