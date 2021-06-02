@@ -10,8 +10,11 @@ const typeDefs = gql`
     id: ID
   }
 
-  type Query {
-    getProjects: [Project]
+  type Task {
+    name: String
+    id: ID
+    project: String
+    state: Boolean
   }
 
   input UserInput {
@@ -29,12 +32,29 @@ const typeDefs = gql`
     name: String!
   }
 
+  input TaskInput {
+    name: String!
+    project: String
+  }
+
+  input ProjectIDInput {
+    project: String!
+  }
+
+  type Query {
+    getProjects: [Project]
+    getTasks(input: ProjectIDInput): [Task]
+  }
+
   type Mutation {
     registerUser(input: UserInput): String
     authenticateUser(input: AuthenticateInput): Token
     newProject(input: ProjectInput): Project
     updateProject(id: ID!, input: ProjectInput): Project
     deleteProject(id: ID!): String
+    newTask(input: TaskInput): Task
+    updateTask(id: ID!, input: TaskInput, state: Boolean): Task
+    deleteTask(id: ID!): String
   }
 `;
 
